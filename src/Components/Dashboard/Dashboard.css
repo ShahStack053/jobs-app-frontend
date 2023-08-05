@@ -1,0 +1,25 @@
+.dashboard {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2fr 2fr;
+  gap: 50px;
+}
+.dashboard-card {
+  cursor: pointer;
+  background-color: white;
+  box-shadow: -1px 3px 45px -16px rgba(0, 0, 0, 0.51);
+  -webkit-box-shadow: -1px 3px 45px -16px rgba(0, 0, 0, 0.51);
+  -moz-box-shadow: -1px 3px 45px -16px rgba(0, 0, 0, 0.51);
+  color: #6f2727;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  margin-inline: 80px;
+  width: 60%;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+}

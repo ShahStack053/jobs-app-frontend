@@ -1,0 +1,45 @@
+.add-job-container {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+.add-job-title-div {
+  /* display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px; */
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  width: 100%;
+}
+.back-arrow-div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.add-job-arrow {
+  color: gray;
+  font-size: 20px;
+}
+.add-job-title {
+  margin-left: 20px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  color: #6f2727;
+  /* opacity: 0.8; */
+  /* margin-top: 8px; */
+}
+.add-job-btn {
+  background-color: #6f2727;
+  color: white;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  height: 40px;
+  width: 150px;
+  font-family: "Poppins";
+  font-size: 14px;
+  font-weight: 500;
+}
