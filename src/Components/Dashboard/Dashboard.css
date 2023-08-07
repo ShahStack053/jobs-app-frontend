@@ -1,8 +1,12 @@
 .dashboard {
   width: 100%;
-  display: grid;
-  grid-template-columns: 2fr 2fr;
+  height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: 50px;
+  /* background-color: #6f2727; */
 }
 .dashboard-card {
   cursor: pointer;
@@ -15,11 +19,44 @@
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
-  margin-inline: 80px;
-  width: 60%;
+  /* margin-inline: 80px; */
+  width: 40%;
   height: 90px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50px;
+}
+
+@media only screen and (min-width: 1440px) {
+  .dashboard-card {
+    width: 30%;
+    height: 90px;
+  }
+  .dashboard {
+    height: 50vh;
+    gap: 30%;
+  }
+}
+
+/* @media only screen and (max-width: 1439px) {
+  .dashboard-card {
+    width: 200px;
+    height: 90px;
+  }
+  .dashboard {
+    height: 50vh;
+    gap: 30%;
+  }
+} */
+@media only screen and (min-width: 1025px) and (max-width: 1439px) {
+  .dashboard-card {
+    width: 270px;
+    height: 90px;
+  }
+
+  .dashboard {
+    height: 50vh;
+    gap: 30%;
+  }
 }

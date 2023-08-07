@@ -4,6 +4,7 @@ import "./AddCategory.css";
 import { useNavigate } from "react-router-dom";
 import { Modal } from "antd";
 import axios from "axios";
+import { Base_Route } from "../../helper/constant";
 
 const generateRandomId = () => {
   return Math.floor(1000 + Math.random() * 9000);
@@ -20,7 +21,7 @@ const AddCategory = () => {
     const data = JSON.stringify(categoryData);
     axios({
       method: "Post",
-      url: "",
+      url: `${Base_Route}/api/category`,
       headers: {
         Authorization: `Bearer ${localStorage.AuthToken}`,
         "Content-Type": "application/Json",
@@ -28,11 +29,11 @@ const AddCategory = () => {
       data,
     }).then(
       (res) => {
+        console.log("category created");
         Modal.success({
           title: "Success",
           content: "Category Created Successfully",
         });
-        console.log("Category created successful");
         navigate("/portal/category");
       },
       (err) => {
@@ -58,7 +59,7 @@ const AddCategory = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("CategoryData===>", categoryData);
+    addCategory();
   };
 
   return (
@@ -94,7 +95,6 @@ const AddCategory = () => {
               name="cat_icon_link"
               placeholder="Add icon link"
               onChange={handleInputChange}
-              required
             />
           </div>
           <div className="d-flex justify-content-end">

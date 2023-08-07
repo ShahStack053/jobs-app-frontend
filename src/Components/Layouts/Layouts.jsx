@@ -5,6 +5,10 @@ import { ExclamationCircleFilled } from "@ant-design/icons";
 import { Layout } from "antd";
 import Navbar from "../Header/Navbar";
 import { Outlet, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import { Base_Route } from "../../helper/constant";
+
 const { Header, Sider, Content } = Layout;
 
 const Layouts = () => {
@@ -27,7 +31,7 @@ const Layouts = () => {
     confirm({
       title: "Do you want to Logout?",
       icon: <ExclamationCircleFilled style={{ color: " #faad14" }} />,
-      content: "You will return to signIn page",
+      content: "You will return to Login page",
       okText: "Yes",
       cancelText: "Cancel",
       okCancel: true,
@@ -36,92 +40,111 @@ const Layouts = () => {
       },
       cancelButtonProps: { style: { float: "right" } },
       onOk() {
-        localStorage.clear();
-        navigate("/");
+        axios({
+          method: "post",
+          url: `${Base_Route}/api/auth/logout`,
+          headers: {
+            Authorization: `Bearer ${localStorage.AuthToken}`,
+            "Content-Type": "application/json",
+          },
+        })
+          .then(function (res) {
+            if (res.status === 200) {
+              toast.success(res.message);
+              navigate("/");
+              localStorage.clear();
+            }
+          })
+          .catch((err) => {
+            toast.warn(err.message);
+          });
       },
       onCancel() {
-        console.log("Cancel");
+        toast.info("You cancel the logout");
       },
     });
   };
   return (
-    <Layout style={{ height: "100%" }}>
-      <Sider
-        style={{
-          background: "white",
-          height: "100vh",
-          position: "fixed",
-          left: 0,
-          // borderRight: "2px solid white",
-        }}
-      >
-        <div className="sideBar">
-          <div className="sidebar-upper-div">Jobs Portal</div>
-          <div className="sidebar-lower-div">
-            <button
-              className="sider-btn"
-              onClick={() => navigateRouteHandler("1")}
-            >
-              Dashboard
-            </button>
-            <button
-              className="sider-btn"
-              onClick={() => navigateRouteHandler("2")}
-            >
-              {" "}
-              Jobs
-            </button>
-            <button
-              className="sider-btn"
-              onClick={() => navigateRouteHandler("3")}
-            >
-              Category
-            </button>
-            <button
-              className="sider-btn"
-              onClick={() => navigateRouteHandler("4")}
-            >
-              Settings
-            </button>
-            <div className="logout-div">
+    <>
+      <ToastContainer />
+      <Layout style={{ height: "100%" }}>
+        <Sider
+          style={{
+            background: "white",
+            height: "100vh",
+            position: "fixed",
+            left: 0,
+            // borderRight: "2px solid white",
+          }}
+        >
+          <div className="sideBar">
+            <div className="sidebar-upper-div">Jobs Portal</div>
+            <div className="sidebar-lower-div">
               <button
                 className="sider-btn"
-                onClick={() => navigateRouteHandler("5")}
+                onClick={() => navigateRouteHandler("1")}
               >
-                Logout
+                Dashboard
               </button>
+              <button
+                className="sider-btn"
+                onClick={() => navigateRouteHandler("2")}
+              >
+                {" "}
+                Jobs
+              </button>
+              <button
+                className="sider-btn"
+                onClick={() => navigateRouteHandler("3")}
+              >
+                Category
+              </button>
+              <button
+                className="sider-btn"
+                onClick={() => navigateRouteHandler("4")}
+              >
+                Settings
+              </button>
+              <div className="logout-div">
+                <button
+                  className="sider-btn"
+                  onClick={() => navigateRouteHandler("5")}
+                >
+                  Logout
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      </Sider>
-      <Layout>
-        <Header
-          style={{
-            padding: 0,
-            background: "white",
-            position: "fixed",
-            zIndex: 1,
-            right: 0,
-            left: 200,
-            // borderBottom: "2px solid #6f2727",
-          }}
-        >
-          <Navbar />
-        </Header>
-        <Content
-          style={{
-            margin: " 85px 24px 24px 225px",
-            padding: "30px 24px",
-            minHeight: 491,
-            height: "100%",
-            background: "white",
-            borderRadius: "50px",
-          }}
-        >
-          <Outlet />{" "}
-        </Content>
+        </Sider>
+        <Layout>
+          <Header
+            style={{
+              padding: 0,
+              background: "white",
+              position: "fixed",
+              zIndex: 1,
+              right: 0,
+              left: 200,
+              // borderBottom: "2px solid #6f2727",
+            }}
+          >
+            <Navbar />
+          </Header>
+          <Content
+            style={{
+              margin: " 85px 24px 24px 225px",
+              padding: "30px 24px",
+              minHeight: 491,
+              height: "100%",
+              background: "white",
+              borderRadius: "50px",
+            }}
+          >
+            <Outlet />{" "}
+          </Content>
+        </Layout>
       </Layout>
-    </Layout>
+    </>
   );
 };
 

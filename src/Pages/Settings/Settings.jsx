@@ -1,34 +1,82 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Settings.css";
+import axios from "axios";
+import { Base_Route } from "../../helper/constant";
+import { Modal } from "antd";
+import { toast } from "react-toastify";
 
 const Settings = () => {
-  const [adsDetail, setAdsDetails] = useState({
-    ad_show: true,
-    ad_source: "Facebook",
-    admob_app_id: "",
-    admob_open_app_id: "",
-    admob_interstitial_ad_id: "",
-    admob_native_ad_id: "",
-    admob_banner_ad_id: "",
-    fb_app_id: "",
-    fb_interstitial_ad_id: "",
-    fb_native_ad_id: "",
-    fb_banner_ad_id: "",
-  });
+  const [setting, setSetting] = useState([]);
+  const [id, setId] = useState();
+
+  useEffect(() => {
+    axios({
+      method: "Get",
+      url: `${Base_Route}/api/settings`,
+      headers: {
+        Authorization: `Bearer ${localStorage.AuthToken}`,
+      },
+    }).then(
+      (res) => {
+        setId(res.data[0]._id);
+        setSetting(res.data[0]);
+
+        toast.success("setting data get successfully");
+      },
+      (err) => {
+        if (err.response.status === 401) {
+          toast.warn("UnAuthorize user request");
+        } else if (err.response.status === 500) {
+          toast.warn("Internal Server Error");
+        } else {
+          toast.warn(err.message);
+        }
+      }
+    );
+  }, []);
+
+  const saveSetting = () => {
+    const data = JSON.stringify(setting);
+    axios({
+      method: "Put",
+      url: `${Base_Route}/api/settings/${id}`,
+      headers: {
+        Authorization: `Bearer ${localStorage.AuthToken}`,
+        "Content-Type": "application/Json",
+      },
+      data,
+    }).then(
+      (res) => {
+        Modal.success({
+          title: "Success",
+          content: "Setting Updated Successfully",
+        });
+      },
+      (err) => {
+        if (err.response.status === 401) {
+          toast.warn("UnAuthorize user request");
+        } else if (err.response.status === 500) {
+          toast.warn("Internal Server Error");
+        } else {
+          toast.warn(err.message);
+        }
+      }
+    );
+  };
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     let updatedValue = value;
     if (name === "ad_show") {
       updatedValue = value === "true";
     }
-    setAdsDetails((prevData) => ({
+    setSetting((prevData) => ({
       ...prevData,
       [name]: updatedValue,
     }));
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("SettingsData===>", adsDetail);
+    saveSetting();
   };
   return (
     <div className="settings-container">
@@ -36,8 +84,6 @@ const Settings = () => {
         <h3 className="featureTitle">
           <b>App Features</b>
         </h3>
-        {/* <h3 className="setting-title">Settings</h3> */}
-        {/* <button className="save-btn">Save</button> */}
       </div>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
@@ -49,7 +95,8 @@ const Settings = () => {
             id="adShow"
             name="ad_show"
             onChange={handleInputChange}
-            value={adsDetail.ad_show}
+            value={setting.ad_show}
+            // contentEditable
           >
             <option value={true}>On</option>
             <option value={false}>Off</option>
@@ -64,7 +111,9 @@ const Settings = () => {
             id="adSource"
             name="ad_source"
             onChange={handleInputChange}
-            value={adsDetail.ad_source}
+            value={setting.ad_source}
+            // defaultValue={setting.ad_source}
+            // contentEditable
           >
             <option value="Facebook">Meta Audience Networks</option>
             <option value="AdMob">AdMob</option>
@@ -81,6 +130,7 @@ const Settings = () => {
             name="admob_app_id"
             placeholder="ca-app-pub-3940256099942544~3347511713"
             onChange={handleInputChange}
+            value={setting.admob_app_id}
             required
           ></input>
         </div>
@@ -95,6 +145,7 @@ const Settings = () => {
             name="admob_open_app_id"
             placeholder="ca-app-pub-3940256099942544/3419835294"
             onChange={handleInputChange}
+            value={setting.admob_open_app_id}
             required
           ></input>
         </div>
@@ -109,6 +160,7 @@ const Settings = () => {
             name="admob_interstitial_ad_id"
             placeholder="ca-app-pub-3940256099942544/3419835294"
             onChange={handleInputChange}
+            value={setting.admob_interstitial_ad_id}
             required
           ></input>
         </div>
@@ -123,6 +175,7 @@ const Settings = () => {
             name="admob_native_ad_id"
             placeholder="TEST_AD_TYPE#YOUR_PLACEMENT_ID"
             onChange={handleInputChange}
+            value={setting.admob_native_ad_id}
             required
           ></input>
         </div>
@@ -136,6 +189,7 @@ const Settings = () => {
             id="mobBannerId"
             name="admob_banner_ad_id"
             placeholder="ca-app-pub-3940256099942544/3419835294"
+            value={setting.admob_banner_ad_id}
             onChange={handleInputChange}
             required
           ></input>
@@ -151,6 +205,7 @@ const Settings = () => {
             name="fb_app_id"
             placeholder="Facebook App Id"
             onChange={handleInputChange}
+            value={setting.fb_app_id}
             required
           ></input>
         </div>
@@ -165,6 +220,7 @@ const Settings = () => {
             name="fb_interstitial_ad_id"
             placeholder="TEST_AD_TYPE#YOUR_PLACEMENT_ID"
             onChange={handleInputChange}
+            value={setting.fb_interstitial_ad_id}
             required
           ></input>
         </div>
@@ -179,6 +235,7 @@ const Settings = () => {
             name="fb_native_ad_id"
             placeholder="TEST_AD_TYPE#YOUR_PLACEMENT_ID"
             onChange={handleInputChange}
+            value={setting.fb_native_ad_id}
             required
           ></input>
         </div>
@@ -193,6 +250,8 @@ const Settings = () => {
             name="fb_banner_ad_id"
             placeholder="TEST_AD_TYPE#YOUR_PLACEMENT_ID"
             onChange={handleInputChange}
+            value={setting.fb_banner_ad_id}
+            contentEditable
             required
           ></input>
         </div>

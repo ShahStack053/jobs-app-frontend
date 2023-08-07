@@ -7,36 +7,43 @@ import confirm from "antd/es/modal/confirm";
 import { useNavigate } from "react-router-dom";
 import { DeleteFilled, ExclamationCircleFilled } from "@ant-design/icons";
 import axios from "axios";
+import { Base_Route } from "../../helper/constant";
+import { ToastContainer, toast } from "react-toastify";
 
 const Jobs = () => {
   const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1);
   const [jobDetail, setJobDetail] = useState([]);
-  useEffect(() => {
-    const userId = JSON.parse(localStorage.getItem("userId"));
-    const formData = new FormData();
-    formData.append("login_user_id", userId);
+  console.log("job detail data", jobDetail);
 
+  useEffect(() => {
     axios({
-      method: "Post",
-      url: ``,
+      method: "Get",
+      url: `${Base_Route}/api/jobs`,
       headers: {
-        Token: localStorage.AuthToken,
+        Authorization: `Bearer ${localStorage.AuthToken}`,
       },
-      data: formData,
     }).then(
       (res) => {
-        setJobDetail(res.data.data);
+        setJobDetail(res.data);
+        toast.success("Jobs data get successfully");
       },
       (err) => {
-        console.log("err===>", err);
+        if (err.response.status === 401) {
+          toast.warn("UnAuthorize user request");
+        } else if (err.response.status === 500) {
+          toast.warn("Internal Server Error");
+        } else {
+          toast.warn(err.message);
+        }
       }
     );
   }, []);
-  const deleteClickHandler = () => {
+  const deleteClickHandler = (jobId) => {
     confirm({
-      title: "Delete User",
+      title: "Delete Jobs",
       icon: <ExclamationCircleFilled style={{ color: " #faad14" }} />,
-      content: "Do you want to delete User?",
+      content: "Do you want to delete this Job?",
       okText: "Yes",
       cancelText: "Cancel",
       okCancel: true,
@@ -45,25 +52,28 @@ const Jobs = () => {
       onOk() {
         axios({
           method: "Delete",
-          url: ``,
+          url: `${Base_Route}/api/jobs/${jobId}`,
           headers: {
             Authorization: `Bearer ${localStorage.AuthToken}`,
-            "Content-Type": "application/json",
           },
         }).then(
           (res) => {
+            setJobDetail((prevJobDetail) =>
+              prevJobDetail.filter((item) => item._id !== jobId)
+            );
             Modal.success({
               title: "Success",
               content: "Job Deleted Successfully",
             });
-            console.log("Job Deleted successful");
           },
           (err) => {
-            console.log(err);
-            Modal.error({
-              title: "Failed",
-              content: "Job Deletion Failed",
-            });
+            if (err.response.status === 401) {
+              toast.warn("UnAuthorize user request");
+            } else if (err.response.status === 500) {
+              toast.warn("Internal Server Error");
+            } else {
+              toast.warn(err.message);
+            }
           }
         );
       },
@@ -75,21 +85,6 @@ const Jobs = () => {
   const myNav = () => {
     navigate("/portal/add-jobs");
   };
-  const generateDummyData = (count) => {
-    const data = [];
-    for (let i = 1; i <= count; i++) {
-      data.push({
-        key: i.toString(),
-        no: i,
-        id: `ID-${i}`,
-        category: `waiter ${i}`,
-        title: "Raza",
-        action: "Action",
-      });
-    }
-    return data;
-  };
-  const dummydata = generateDummyData(5);
   const columns = [
     {
       title: (
@@ -103,26 +98,13 @@ const Jobs = () => {
             textAlign: "center",
           }}
         >
-          No
+          Sr.no
         </div>
       ),
       dataIndex: "no",
       key: "no",
       ellipsis: true,
-      render: (text) => (
-        <div
-          style={{
-            color: "#000000",
-            fontFamily: "Poppins",
-            fontStyle: "normal",
-            fontWeight: 400,
-            fontSize: "12px",
-            textAlign: "center",
-          }}
-        >
-          {text}
-        </div>
-      ),
+      render: (text, record, index) => (currentPage - 1) * 4 + index + 1,
       width: "8%",
     },
     {
@@ -137,11 +119,11 @@ const Jobs = () => {
             textAlign: "center",
           }}
         >
-          Id
+          Job Id
         </div>
       ),
-      dataIndex: "id",
-      key: "id",
+      dataIndex: "job_id",
+      key: "job_id",
       ellipsis: true,
       render: (text) => (
         <div
@@ -174,8 +156,8 @@ const Jobs = () => {
           Category
         </div>
       ),
-      dataIndex: "category",
-      key: "category",
+      dataIndex: "job_category",
+      key: "job_category",
       ellipsis: true,
       render: (text) => (
         <div
@@ -208,8 +190,8 @@ const Jobs = () => {
           Title
         </div>
       ),
-      dataIndex: "title",
-      key: "title",
+      dataIndex: "job_title",
+      key: "job_title",
       ellipsis: true,
       render: (text) => (
         <div
@@ -246,7 +228,7 @@ const Jobs = () => {
       dataIndex: "action",
       key: "action",
       ellipsis: true,
-      render: (props, row) => (
+      render: (_, record) => (
         <div
           style={{
             color: "#000000",
@@ -263,6 +245,7 @@ const Jobs = () => {
               fontSize: "20px",
               cursor: "pointer",
             }}
+            onClick={() => deleteClickHandler(record._id)}
           />
         </div>
       ),
@@ -270,6 +253,7 @@ const Jobs = () => {
   ];
   return (
     <>
+      <ToastContainer />
       <div className="heading-div">
         <h3 className="setting-title">Jobs</h3>
         <button className="add-btn" onClick={myNav}>
@@ -278,9 +262,14 @@ const Jobs = () => {
       </div>
       <Table
         columns={columns}
-        dataSource={dummydata}
+        dataSource={jobDetail}
         rowClassName={() => "table-row"}
-        pagination={false}
+        pagination={{
+          pageSize: 4,
+          hideOnSinglePage: true,
+          showSizeChanger: false,
+          onChange: (page) => setCurrentPage(page),
+        }}
       />
     </>
   );

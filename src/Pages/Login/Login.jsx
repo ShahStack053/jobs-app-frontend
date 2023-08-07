@@ -1,20 +1,22 @@
 import React, { useState } from "react";
 import "./Login.css";
 import FormInput from "../../Components/FormInput/FormInput";
+import { Base_Route } from "../../helper/constant";
 import { useNavigate } from "react-router-dom";
-// import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import axios from "axios";
 const Login = () => {
   const navigate = useNavigate();
   const [values, setValues] = useState({
-    userName: "",
+    username: "",
     password: "",
   });
   const inputs = [
     {
       id: 1,
-      name: "userName",
+      name: "username",
       type: "text",
       placeholder: "User Name",
       errorMessage: "Please enter the correct userName",
@@ -41,28 +43,26 @@ const Login = () => {
   const onChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
-  const myNav = () => {
-    // if (values.userName === "admin" && values.password === "admin@jobs") {
-    navigate("/portal/dashboard");
-    // } else {
-    //   alert("Please Enter Valid Credential");
-    // }
-  };
+
   const myLogin = () => {
     axios({
       method: "post",
-      url: "",
+      url: `${Base_Route}/api/auth/login`,
       data: values,
     })
       .then(function (res) {
         if (res.status === 200) {
-          // console.log("token==>>>", res.data.data.token);
+          toast.success(res.data.message);
           navigate("/portal/dashboard");
-          localStorage.setItem("AuthToken", res.data.data.token);
+          localStorage.setItem("AuthToken", res.data.token);
         }
       })
       .catch((err) => {
-        console.log("error==>>", err);
+        if (err.response.status === 401) {
+          toast.warn("Invalid Credentials");
+        } else {
+          toast.warn(err.message);
+        }
       });
   };
   return (
@@ -77,8 +77,8 @@ const Login = () => {
             onChange={onChange}
           />
         ))}
-
-        <button className="login-btn" onClick={myNav}>
+        <ToastContainer />
+        <button className="login-btn" onClick={myLogin}>
           Login
         </button>
       </form>
