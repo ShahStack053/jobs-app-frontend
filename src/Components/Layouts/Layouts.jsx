@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Layouts.css";
 import confirm from "antd/es/modal/confirm";
 import { ExclamationCircleFilled } from "@ant-design/icons";
@@ -13,8 +13,9 @@ const { Header, Sider, Content } = Layout;
 
 const Layouts = () => {
   const navigate = useNavigate();
-
+  const [selectedButton, setSelectedButton] = useState("1");
   const navigateRouteHandler = (e) => {
+    setSelectedButton(e);
     if (e === "1") {
       navigate("/portal/dashboard");
     } else if (e === "2") {
@@ -81,34 +82,49 @@ const Layouts = () => {
             <div className="sidebar-upper-div">Jobs Portal</div>
             <div className="sidebar-lower-div">
               <button
-                className="sider-btn"
+                // className="sider-btn"
+                className={`sider-btn ${
+                  selectedButton === "1" ? "clicked" : ""
+                }`}
                 onClick={() => navigateRouteHandler("1")}
               >
                 Dashboard
               </button>
               <button
-                className="sider-btn"
+                // className="sider-btn"
+                className={`sider-btn ${
+                  selectedButton === "2" ? "clicked" : ""
+                }`}
                 onClick={() => navigateRouteHandler("2")}
               >
                 {" "}
                 Jobs
               </button>
               <button
-                className="sider-btn"
+                // className="sider-btn"
+                className={`sider-btn ${
+                  selectedButton === "3" ? "clicked" : ""
+                }`}
                 onClick={() => navigateRouteHandler("3")}
               >
                 Category
               </button>
               <button
-                className="sider-btn"
+                // className="sider-btn"
+                className={`sider-btn ${
+                  selectedButton === "4" ? "clicked" : ""
+                }`}
                 onClick={() => navigateRouteHandler("4")}
               >
                 Settings
               </button>
               <div className="logout-div">
                 <button
-                  className="sider-btn"
+                  // className="sider-btn"
                   onClick={() => navigateRouteHandler("5")}
+                  className={`sider-btn ${
+                    selectedButton === "5" ? "clicked" : ""
+                  }`}
                 >
                   Logout
                 </button>

@@ -10,11 +10,33 @@
   background-color: #6f2727;
   color: white;
   border: none;
-  border-radius: 7px;
+  border-radius: 12px;
   cursor: pointer;
   height: 40px;
   width: 150px;
   font-family: "Poppins";
   font-size: 14px;
   font-weight: 500;
+}
+.add-btn:hover {
+  background-color: white;
+  border: 3px solid #6f2727;
+  color: #6f2727;
+}
+
+.delete-icon {
+  cursor: pointer;
+  font-size: 15px;
+  /* color: #f60303; */
+  background: #6f2727;
+  /* background: red; */
+  padding: 10px;
+  border-radius: 20px;
+  color: #fff;
+  border: 2px solid #6f2727;
+}
+.delete-icon:hover {
+  border: 2px solid #6f2727;
+  color: #6f2727;
+  background: #fff;
 }

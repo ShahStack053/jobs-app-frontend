@@ -4,10 +4,6 @@
   flex-direction: column;
 }
 .add-job-title-div {
-  /* display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 60px; */
   display: grid;
   grid-template-columns: 1fr 2fr;
   width: 100%;
@@ -28,18 +24,27 @@
   font-weight: 600;
   font-size: 20px;
   color: #6f2727;
-  /* opacity: 0.8; */
-  /* margin-top: 8px; */
 }
 .add-job-btn {
   background-color: #6f2727;
   color: white;
   border: none;
-  border-radius: 7px;
+  border-radius: 12px;
   cursor: pointer;
   height: 40px;
   width: 150px;
   font-family: "Poppins";
   font-size: 14px;
   font-weight: 500;
+  scale: 0.97;
+}
+.add-job-btn:hover {
+  background-color: white;
+  border: 2px solid #6f2727;
+  color: #6f2727;
+}
+.my-label {
+  color: #6f2727;
+  font-weight: bold;
+  margin: 5px 0px;
 }

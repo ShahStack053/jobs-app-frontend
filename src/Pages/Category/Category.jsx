@@ -78,7 +78,7 @@ const Category = () => {
         );
       },
       onCancel() {
-        console.log("Cancel");
+        toast.info("You Cancel The Delete Action ");
       },
     });
   };
@@ -205,11 +205,7 @@ const Category = () => {
           }}
         >
           <DeleteFilled
-            style={{
-              color: "#6f2727",
-              fontSize: "20px",
-              cursor: "pointer",
-            }}
+            className="delete-icon"
             onClick={() => deleteClickHandler(record._id)}
           />
         </div>

@@ -36,6 +36,20 @@
   font-weight: 600;
   font-family: "Poppins";
 }
+.sider-btn.clicked {
+  background-color: #6f2727;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+}
+.sider-btn.clicked:hover {
+  color: #6f2727;
+  background-color: #ffffff;
+}
+.sider-btn:hover {
+  background-color: #6f2727;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+}
 .logout-div {
   margin-top: 70%;
 }

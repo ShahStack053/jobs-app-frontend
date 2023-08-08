@@ -14,13 +14,15 @@
 
 .login-form {
   background-color: rgb(247, 231, 243);
-  padding: 0px 60px 30px 60px;
+  padding: 30px 60px 30px 60px;
   border-radius: 15px;
 }
 
 .login-title {
   color: rgb(77, 1, 77);
   text-align: center;
+  font-family: "Poppins";
+  font-weight: 600;
 }
 
 .login-btn {

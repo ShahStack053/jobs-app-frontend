@@ -4,7 +4,6 @@ import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { DatePicker, Modal } from "antd";
 import { Base_Route } from "../../helper/constant";
-
 import moment from "moment";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -16,7 +15,6 @@ const generateRandomId = () => {
 const AddJob = () => {
   const navigate = useNavigate();
   const [category, setCategory] = useState([]);
-  console.log("category===>", category);
   const [jobData, setJobData] = useState({
     job_id: generateRandomId(),
     current_date: moment(new Date()).format("YYYY-MM-DD"),
@@ -27,6 +25,11 @@ const AddJob = () => {
     job_category: "Engineer",
     job_blog_link: "",
   });
+  const toTitleCase = (str) => {
+    return str.replace(/\w\S*/g, (txt) => {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+  };
   useEffect(() => {
     axios({
       method: "Get",
@@ -99,7 +102,6 @@ const AddJob = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     createJob();
-    // console.log("jobdata====>", JSON.stringify(jobData));
   };
 
   return (
@@ -145,11 +147,11 @@ const AddJob = () => {
                 onChange={handleInputChange}
                 defaultValue={jobData.job_category}
               >
-                {Array.from(new Set(category.map((item) => item.cat_name))).map(
-                  (cat_name) => (
-                    <option key={cat_name}>{cat_name}</option>
-                  )
-                )}
+                {Array.from(
+                  new Set(category.map((item) => toTitleCase(item.cat_name)))
+                ).map((cat_name) => (
+                  <option key={cat_name}>{cat_name}</option>
+                ))}
               </select>
             </div>
 

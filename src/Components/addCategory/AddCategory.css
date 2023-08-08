@@ -1,0 +1,18 @@
+.my-label {
+  color: #6f2727;
+  font-weight: bold;
+  margin: 5px 0px;
+}
+.disable-button {
+  background-color: #6f2727;
+  opacity: 0.6;
+  color: white;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  height: 40px;
+  width: 150px;
+  font-family: "Poppins";
+  font-size: 14px;
+  font-weight: 500;
+}

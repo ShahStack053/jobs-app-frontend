@@ -14,7 +14,6 @@ const Jobs = () => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [jobDetail, setJobDetail] = useState([]);
-  console.log("job detail data", jobDetail);
 
   useEffect(() => {
     axios({
@@ -68,7 +67,7 @@ const Jobs = () => {
           },
           (err) => {
             if (err.response.status === 401) {
-              toast.warn("UnAuthorize user request");
+              toast.warn("UnAuthorize User");
             } else if (err.response.status === 500) {
               toast.warn("Internal Server Error");
             } else {
@@ -78,7 +77,7 @@ const Jobs = () => {
         );
       },
       onCancel() {
-        console.log("Cancel");
+        toast.info("You Cancel The Delete Action ");
       },
     });
   };
@@ -240,11 +239,7 @@ const Jobs = () => {
           }}
         >
           <DeleteFilled
-            style={{
-              color: "#6f2727",
-              fontSize: "20px",
-              cursor: "pointer",
-            }}
+            className="delete-icon"
             onClick={() => deleteClickHandler(record._id)}
           />
         </div>
