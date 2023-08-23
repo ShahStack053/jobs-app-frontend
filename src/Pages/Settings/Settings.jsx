@@ -21,7 +21,7 @@ const Settings = () => {
         setId(res.data[0]._id);
         setSetting(res.data[0]);
 
-        toast.success("setting data get successfully");
+        // toast.success("setting data get successfully");
       },
       (err) => {
         if (err.response.status === 401) {

@@ -45,6 +45,7 @@ const Login = () => {
   };
 
   const myLogin = () => {
+    console.log("values===>", values);
     axios({
       method: "post",
       url: `${Base_Route}/api/auth/login`,

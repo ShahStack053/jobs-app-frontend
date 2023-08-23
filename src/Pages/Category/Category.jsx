@@ -13,6 +13,7 @@ const Category = () => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [category, setCategory] = useState([]);
+  console.log("categoryData===>", category);
 
   useEffect(() => {
     axios({
@@ -24,7 +25,7 @@ const Category = () => {
     }).then(
       (res) => {
         setCategory(res.data);
-        toast.success("Category data get successfully");
+        // toast.success("Category data get successfully");
       },
       (err) => {
         if (err.response.status === 401) {
@@ -106,40 +107,40 @@ const Category = () => {
       render: (text, record, index) => (currentPage - 1) * 4 + index + 1,
       width: "15%",
     },
-    {
-      title: (
-        <div
-          style={{
-            color: "#606060",
-            fontFamily: "Poppins",
-            fontStyle: "normal",
-            fontWeight: 400,
-            fontSize: "12.2195px",
-            // textAlign: "center",
-          }}
-        >
-          Category Id
-        </div>
-      ),
-      dataIndex: "cat_id",
-      key: "cat_id",
-      ellipsis: true,
-      render: (text) => (
-        <div
-          style={{
-            color: "#000000",
-            fontFamily: "Poppins",
-            fontStyle: "normal",
-            fontWeight: 400,
-            fontSize: "12px",
-            // textAlign: "center",
-          }}
-        >
-          {text}
-        </div>
-      ),
-      // width: "13%",
-    },
+    // {
+    //   title: (
+    //     <div
+    //       style={{
+    //         color: "#606060",
+    //         fontFamily: "Poppins",
+    //         fontStyle: "normal",
+    //         fontWeight: 400,
+    //         fontSize: "12.2195px",
+    //         // textAlign: "center",
+    //       }}
+    //     >
+    //       Category Id
+    //     </div>
+    //   ),
+    //   dataIndex: "cat_id",
+    //   key: "cat_id",
+    //   ellipsis: true,
+    //   render: (text) => (
+    //     <div
+    //       style={{
+    //         color: "#000000",
+    //         fontFamily: "Poppins",
+    //         fontStyle: "normal",
+    //         fontWeight: 400,
+    //         fontSize: "12px",
+    //         // textAlign: "center",
+    //       }}
+    //     >
+    //       {text}
+    //     </div>
+    //   ),
+    //   // width: "13%",
+    // },
     {
       title: (
         <div
@@ -169,7 +170,7 @@ const Category = () => {
             // textAlign: "center",
           }}
         >
-          {text}
+          {text.charAt(0).toUpperCase() + text.slice(1).toLowerCase()}
         </div>
       ),
       // width: "20%",

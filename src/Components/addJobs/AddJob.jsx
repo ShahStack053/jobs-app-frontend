@@ -40,7 +40,7 @@ const AddJob = () => {
     }).then(
       (res) => {
         setCategory(res.data);
-        toast.success("Category data get successfully");
+        // toast.success("Category data get successfully");
       },
       (err) => {
         if (err.response.status === 401) {

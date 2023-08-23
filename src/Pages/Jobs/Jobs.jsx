@@ -14,6 +14,7 @@ const Jobs = () => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [jobDetail, setJobDetail] = useState([]);
+  console.log("jobDetailData===>", jobDetail);
 
   useEffect(() => {
     axios({
@@ -25,7 +26,7 @@ const Jobs = () => {
     }).then(
       (res) => {
         setJobDetail(res.data);
-        toast.success("Jobs data get successfully");
+        // toast.success("Jobs data get successfully");
       },
       (err) => {
         if (err.response.status === 401) {
@@ -94,7 +95,7 @@ const Jobs = () => {
             fontStyle: "normal",
             fontSize: "12.2195px",
             fontWeight: 400,
-            textAlign: "center",
+            // textAlign: "center",
           }}
         >
           Sr.no
@@ -106,40 +107,40 @@ const Jobs = () => {
       render: (text, record, index) => (currentPage - 1) * 4 + index + 1,
       width: "8%",
     },
-    {
-      title: (
-        <div
-          style={{
-            color: "#606060",
-            fontFamily: "Poppins",
-            fontStyle: "normal",
-            fontWeight: 400,
-            fontSize: "12.2195px",
-            textAlign: "center",
-          }}
-        >
-          Job Id
-        </div>
-      ),
-      dataIndex: "job_id",
-      key: "job_id",
-      ellipsis: true,
-      render: (text) => (
-        <div
-          style={{
-            color: "#000000",
-            fontFamily: "Poppins",
-            fontStyle: "normal",
-            fontWeight: 400,
-            fontSize: "12px",
-            textAlign: "center",
-          }}
-        >
-          {text}
-        </div>
-      ),
-      width: "13%",
-    },
+    // {
+    //   title: (
+    //     <div
+    //       style={{
+    //         color: "#606060",
+    //         fontFamily: "Poppins",
+    //         fontStyle: "normal",
+    //         fontWeight: 400,
+    //         fontSize: "12.2195px",
+    //         textAlign: "center",
+    //       }}
+    //     >
+    //       Job Id
+    //     </div>
+    //   ),
+    //   dataIndex: "job_id",
+    //   key: "job_id",
+    //   ellipsis: true,
+    //   render: (text) => (
+    //     <div
+    //       style={{
+    //         color: "#000000",
+    //         fontFamily: "Poppins",
+    //         fontStyle: "normal",
+    //         fontWeight: 400,
+    //         fontSize: "12px",
+    //         textAlign: "center",
+    //       }}
+    //     >
+    //       {text}
+    //     </div>
+    //   ),
+    //   width: "13%",
+    // },
     {
       title: (
         <div
@@ -169,7 +170,7 @@ const Jobs = () => {
             textAlign: "center",
           }}
         >
-          {text}
+          {text.charAt(0).toUpperCase() + text.slice(1).toLowerCase()}
         </div>
       ),
       width: "20%",
@@ -203,7 +204,7 @@ const Jobs = () => {
             textAlign: "center",
           }}
         >
-          {text}
+          {text.charAt(0).toUpperCase() + text.slice(1).toLowerCase()}
         </div>
       ),
       width: "20%",
