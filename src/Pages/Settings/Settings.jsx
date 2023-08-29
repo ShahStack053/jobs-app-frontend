@@ -20,8 +20,6 @@ const Settings = () => {
       (res) => {
         setId(res.data[0]._id);
         setSetting(res.data[0]);
-
-        // toast.success("setting data get successfully");
       },
       (err) => {
         if (err.response.status === 401) {
@@ -251,6 +249,55 @@ const Settings = () => {
             placeholder="TEST_AD_TYPE#YOUR_PLACEMENT_ID"
             onChange={handleInputChange}
             value={setting.fb_banner_ad_id}
+            contentEditable
+            required
+          ></input>
+        </div>
+        <div className="form-group">
+          <label className="my-label" htmlFor="native_size">
+          Native Size          </label>
+          <select
+            className=" form-control my-1"
+            id="native_size"
+            name="native_size"
+            onChange={handleInputChange}
+            value={setting.native_size}
+            // contentEditable
+          >
+           <option value="Large">Large</option>
+            <option value="Small">Small</option>
+          </select>
+        </div>
+        <div className="form-group">
+          <label className="my-label" htmlFor="native_interval">
+          Native Interval
+          </label>
+          <input
+            type="number"
+            min={0}
+            className="form-control"
+            id="native_interval"
+            name="native_interval"
+            // placeholder="TEST_AD_TYPE#YOUR_PLACEMENT_ID"
+            onChange={handleInputChange}
+            value={setting.native_interval}
+            contentEditable
+            required
+          ></input>
+        </div>
+        <div className="form-group">
+          <label className="my-label" htmlFor="interstitial_interval">
+          Interstitial Interval
+          </label>
+          <input
+            type="number"
+            min={0}
+            className="form-control"
+            id="interstitial_interval"
+            name="interstitial_interval"
+            // placeholder="TEST_AD_TYPE#YOUR_PLACEMENT_ID"
+            onChange={handleInputChange}
+            value={setting.interstitial_interval}
             contentEditable
             required
           ></input>

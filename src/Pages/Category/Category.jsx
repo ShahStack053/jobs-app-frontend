@@ -13,7 +13,6 @@ const Category = () => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [category, setCategory] = useState([]);
-  console.log("categoryData===>", category);
 
   useEffect(() => {
     axios({
@@ -58,7 +57,6 @@ const Category = () => {
           },
         }).then(
           (res) => {
-            // Remove the deleted item from the state
             setCategory((prevCategory) =>
               prevCategory.filter((item) => item._id !== catId)
             );

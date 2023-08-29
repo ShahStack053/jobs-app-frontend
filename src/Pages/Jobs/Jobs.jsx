@@ -14,8 +14,6 @@ const Jobs = () => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [jobDetail, setJobDetail] = useState([]);
-  console.log("jobDetailData===>", jobDetail);
-
   useEffect(() => {
     axios({
       method: "Get",
