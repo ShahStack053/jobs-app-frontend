@@ -147,6 +147,9 @@ const AddJob = () => {
                 onChange={handleInputChange}
                 defaultValue={jobData.job_category}
               >
+                <option value="" selected disabled>
+                  Select a category
+                </option>
                 {Array.from(
                   new Set(category.map((item) => toTitleCase(item.cat_name)))
                 ).map((cat_name) => (
